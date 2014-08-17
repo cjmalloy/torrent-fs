@@ -1,7 +1,7 @@
 torrent-fs
 ==========
 
-Specification for a torrent-based file system.
+Client for a torrent-based file system.
 
 The goal of torrent-fs (tfs) is to extend the existing bittorent spec to create a distributed filesystem. This spec is backwards compatible, so all existing torrents are also tfs torrents. The main features added are
 
