@@ -22,18 +22,15 @@ public class Entry
 			return;
 		}
 
-        ServletHolder sh = new ServletHolder(ServletContainer.class);
-        sh.setInitParameter("com.sun.jersey.config.property.resourceConfigClass", "com.sun.jersey.api.core.PackagesResourceConfig");
-        sh.setInitParameter("com.sun.jersey.config.property.packages", "com.cjmalloy.torrentfs.server.remote.rest");
-        sh.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
-
         Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(server, "/", ServletContextHandler.SESSIONS);
-        context.addServlet(sh, "/*");
+        ServletHolder sh = context.addServlet(ServletContainer.class, "/*");
+        sh.setInitOrder(1);
+        sh.setInitParameter("jersey.config.server.provider.packages","com.cjmalloy.torrentfs.server.remote.rest");
         try
         {
-        	System.out.println("Starting server...");
 			server.start();
+        	System.out.println("Server started on port " + port);
 	        server.join();
 		}
         catch (Exception e)
