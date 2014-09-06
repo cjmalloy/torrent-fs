@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
 
   <name>torrent-fs</name>
-  <url>http://maven.apache.org</url>
+  <url>https://github.com/cjmalloy/torrent-fs</url>
 
   <properties>
     <maven.compiler.target>1.8</maven.compiler.target>
