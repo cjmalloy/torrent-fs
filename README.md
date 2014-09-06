@@ -13,9 +13,9 @@ The goal of torrent-fs (tfs) is to extend the existing bittorent spec to create 
 
 A tfs client operates by presenting a tfs torrent and an extension. The refererence client supports the html extension, and acts as a type of web browser.
 
-All tfs torrents have a .metadata JSON file. If the torrent is a single file torrent ("length" torrent), then the entire payload is that file. If the torrent is a folder torrent ("files" torrent), then the .metadata file is in the root directory.
+All tfs torrents have a .tfs JSON file. If the torrent is a single file torrent ("length" torrent), then the entire payload is that file. If the torrent is a folder torrent ("files" torrent), then the .tfs file is in the root directory.
 
-The .metadata file contains the netsted torrents, GPG signatures, and a list of extenstions. Here is a sample that supports the html extension:
+The .tfs file contains the netsted torrents, GPG signatures, and a list of extenstions. Here is a sample that supports the html extension:
 
 ```javascript
 {
