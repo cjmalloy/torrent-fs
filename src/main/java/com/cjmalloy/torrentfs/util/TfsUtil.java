@@ -6,7 +6,7 @@ import java.util.Map;
 import com.turn.ttorrent.bcodec.BEValue;
 import com.turn.ttorrent.bcodec.InvalidBEncodingException;
 
-public class TfsUtil 
+public class TfsUtil
 {
     public static String printValue(BEValue value) throws InvalidBEncodingException
     {

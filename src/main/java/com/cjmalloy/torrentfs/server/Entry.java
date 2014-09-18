@@ -1,6 +1,7 @@
 package com.cjmalloy.torrentfs.server;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
@@ -12,21 +13,36 @@ public class Entry
     public static void main(String[] args)
     {
         int port = DEFAULT_PORT;
-        if (args.length == 1)
+        String tfsCache;
+        if (args.length == 2)
         {
-            port = Integer.parseInt(args[0]);
+            tfsCache = args[0];
+            port = Integer.parseInt(args[1]);
         }
-        else if (args.length != 0)
+        else if (args.length == 1)
         {
-            System.out.println("Usage: torrent-fs [PORT]");
+            tfsCache = args[0];
+        }
+        else
+        {
+            System.out.println("Usage: torrent-fs DIR [PORT]");
             return;
         }
 
         Server server = new Server(port);
         ServletContextHandler context = new ServletContextHandler(server, "/", ServletContextHandler.SESSIONS);
-        ServletHolder sh = context.addServlet(ServletContainer.class, "/*");
-        sh.setInitOrder(1);
-        sh.setInitParameter("jersey.config.server.provider.packages","com.cjmalloy.torrentfs.server.remote.rest");
+
+        // Rest API
+        ServletHolder rest = context.addServlet(ServletContainer.class, "/*");
+        rest.setInitOrder(1);
+        rest.setInitParameter("jersey.config.server.provider.packages","com.cjmalloy.torrentfs.server.remote.rest");
+
+        // Static files
+        ServletHolder staticFiles = context.addServlet(DefaultServlet.class, "/tfs/");
+        staticFiles.setInitOrder(2);
+        staticFiles.setInitParameter("resourceBase", tfsCache);
+        staticFiles.setInitParameter("dirAllowed", "true");
+
         try
         {
             server.start();
