@@ -37,11 +37,6 @@ public class Entry
         rest.setInitOrder(1);
         rest.setInitParameter("jersey.config.server.provider.packages","com.cjmalloy.torrentfs.server.remote.rest");
 
-        // Static files
-        ServletHolder staticFiles = context.addServlet(DefaultServlet.class, "/tfs/");
-        staticFiles.setInitOrder(2);
-        staticFiles.setInitParameter("resourceBase", tfsCache);
-        staticFiles.setInitParameter("dirAllowed", "true");
 
         try
         {
