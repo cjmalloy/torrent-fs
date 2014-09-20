@@ -10,8 +10,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.io.IOUtils;
+
+import com.cjmalloy.torrentfs.server.TfsClientSingleton;
 import com.cjmalloy.torrentfs.util.TfsUtil;
 import com.turn.ttorrent.bcodec.BDecoder;
+import com.turn.ttorrent.common.Torrent;
 
 @Path("/")
 public class Api
@@ -37,19 +41,16 @@ public class Api
 
     @POST @Path("/add")
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String addTorrent(InputStream bencode)
+    public void addTorrent(InputStream bencode)
     {
-        String s;
         try
         {
-            s = TfsUtil.printValue(BDecoder.bdecode(bencode));
+            TfsClientSingleton.get().addTorrent(new Torrent(IOUtils.toByteArray(bencode), false));
         }
         catch (IOException e)
         {
             e.printStackTrace();
             throw new WebApplicationException(400);
         }
-        return s;
     }
 }
