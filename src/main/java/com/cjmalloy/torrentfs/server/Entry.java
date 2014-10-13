@@ -80,24 +80,11 @@ public class Entry
         {
             server.start();
             System.out.println("Server started on port " + port);
-//            server.join();
+            server.join();
         }
         catch (Exception e)
         {
-//            throw new Error(e);
-        }
-
-        while(true)
-        {
-            try
-            {
-                Thread.sleep(3000);
-            }
-            catch (InterruptedException e)
-            {
-                e.printStackTrace();
-            }
-            TfsClientSingleton.get().printInfo();
+            throw new Error(e);
         }
     }
 
