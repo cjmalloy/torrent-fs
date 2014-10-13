@@ -128,7 +128,7 @@ public class TfsClient
             String mount = t.tfsData.nested.get(i).mount;
             File nMount = new File(tRoot, mount);
             if (nMount.exists()) continue;
-            //TODO: might need to create some folders
+            nMount.getParentFile().mkdirs();
             File nRoot  = new File(rootPath + n.infoHash + "/");
             Files.createSymbolicLink(nMount.toPath(), nRoot.toPath());
         }
