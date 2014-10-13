@@ -20,11 +20,34 @@ public class Meta implements HasJson
 {
     private static JsonParser JSON_PARSER = new JsonParser();
 
+    /**
+     * Optional author string. Possibly used by future extensions.
+     */
     public String author;
+
+    /**
+     * The URL/URI this torrent was downloaded from. Used for checking new versions.
+     */
     public String origin;
-    public boolean solicitation;
-    public boolean adult;
+
+    /**
+     * Download a new torrent from <code>origin</code> for each request.
+     */
     public boolean doNotCache;
+
+    /**
+     * Marks this torrent as an advertisement. Distributing ads that are not marked
+     * may result in banning.
+     */
+    public boolean solicitation;
+
+    /**
+     * Mark this as adult content. Distributing adult content that is not marked
+     * may result in banning.
+     */
+    public boolean adult;
+
+
     public List<Nested> nested;
     public List<Extension> extensions;
 
