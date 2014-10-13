@@ -40,7 +40,7 @@ public class Nested implements HasJson
         }
         if (o.has("torrent"))
         {
-            torrentSource = o.get("torrent");
+            torrent = o.get("torrent");
         }
         return this;
     }
