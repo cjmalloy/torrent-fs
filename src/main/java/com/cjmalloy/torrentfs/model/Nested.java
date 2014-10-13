@@ -1,7 +1,11 @@
 package com.cjmalloy.torrentfs.model;
 
+import java.io.IOException;
+
 import com.cjmalloy.torrentfs.util.JsonUtil.Factory;
 import com.cjmalloy.torrentfs.util.JsonUtil.HasJson;
+import com.cjmalloy.torrentfs.util.TfsUtil;
+import com.cjmalloy.torrentfs.util.TfsUtil.Encoding;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.turn.ttorrent.common.Torrent;
@@ -22,17 +26,16 @@ public class Nested implements HasJson
     public String mount;
     public JsonElement torrent;
 
-    public Torrent getTorrent()
+    public Torrent getTorrent() throws IOException
     {
-        // TODO Auto-generated method stub
-        return null;
+        return TfsUtil.getTorrentFromJson(encoding, torrent);
     }
 
     public Nested parseJson(JsonObject o)
     {
         if (o.has("encoding"))
         {
-            encoding = getEncoding(o.get("encoding").getAsString());
+            encoding = Encoding.getEncoding(o.get("encoding").getAsString());
         }
         if (o.has("mount"))
         {
@@ -43,20 +46,5 @@ public class Nested implements HasJson
             torrent = o.get("torrent");
         }
         return this;
-    }
-
-    private static Encoding getEncoding(String enc)
-    {
-        if (enc.equalsIgnoreCase("bencode")) return Encoding.BENCODE_BASE64;
-        if (enc.equalsIgnoreCase("magnet")) return Encoding.MAGNET;
-        if (enc.equalsIgnoreCase("json")) return Encoding.JSON;
-        return null;
-    }
-
-    public enum Encoding
-    {
-        BENCODE_BASE64,
-        MAGNET,
-        JSON;
     }
 }

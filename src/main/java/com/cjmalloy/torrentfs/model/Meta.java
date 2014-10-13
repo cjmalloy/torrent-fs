@@ -28,7 +28,7 @@ public class Meta implements HasJson
     public List<Nested> nested;
     public List<Extension> extensions;
 
-    public List<Torrent> getNestedTorrents()
+    public List<Torrent> getNestedTorrents() throws IOException
     {
         List<Torrent> ret = new ArrayList<Torrent>();
         for (Nested n : nested)
