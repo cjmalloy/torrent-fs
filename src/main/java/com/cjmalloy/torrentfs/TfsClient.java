@@ -127,10 +127,10 @@ public class TfsClient
         {
             TfsTorrent n  = t.nested.get(i);
             String mount = t.tfsData.nested.get(i).mount;
-            File nMount = new File(rootPath + mount);
+            File nMount = new File(tRoot, mount);
             if (nMount.exists()) continue;
             //TODO: might need to create some folders
-            File nRoot  = new File(rootPath + t.infoHash + "/");
+            File nRoot  = new File(rootPath + n.infoHash + "/");
             Files.createSymbolicLink(nMount.toPath(), nRoot.toPath());
         }
     }
