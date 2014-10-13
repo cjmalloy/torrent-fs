@@ -2,6 +2,7 @@ package com.cjmalloy.torrentfs.model;
 
 import com.cjmalloy.torrentfs.util.JsonUtil.Factory;
 import com.cjmalloy.torrentfs.util.JsonUtil.HasJson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.turn.ttorrent.common.Torrent;
 
@@ -19,8 +20,7 @@ public class Nested implements HasJson
 
     public Encoding encoding;
     public String mount;
-    public String torrentSource;
-    public Torrent torrent;
+    public JsonElement torrent;
 
     public Torrent getTorrent()
     {
@@ -40,7 +40,7 @@ public class Nested implements HasJson
         }
         if (o.has("torrent"))
         {
-            torrentSource = o.get("torrent").getAsString();
+            torrentSource = o.get("torrent");
         }
         return this;
     }
