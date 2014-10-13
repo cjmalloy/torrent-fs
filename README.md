@@ -24,9 +24,9 @@ The .tfs file contains the netsted torrents, GPG signatures, and a list of exten
   adult: false,
   solicitation: false,
   nested: [
-    {encoding: "bencode", mount: "./media/bigMovie.webm", torrent: "base 64 bencode"},
-    {encoding: "magnet",  mount: "./images/",             torrent: "magent uri"},
-    {encoding: "json",    mount: "./pdf/",                torrent: {/* json */}}
+    {encoding: "bencode", mount: "./media/movie.webm", torrent: "base 64 bencode"},
+    {encoding: "magnet",  mount: "./images/",          torrent: "magent uri"},
+    {encoding: "json",    mount: "./pdf/",             torrent: {/* json */}}
   ],
   extensions: ["html", "revision", "gpg"],
   "html": {
@@ -44,9 +44,9 @@ The .tfs file contains the netsted torrents, GPG signatures, and a list of exten
     version: 1.0,
     nested: [
       /* One sig object for each nested torrent */
-      { signers: ["AE96 2A02 ..."], sig: ["detached sig of info_hash for nested #1"]},
-      { signers: ["AE96 2A02 ..."], sig: ["detached sig of info_hash for nested #2"]},
-      { signers: ["AE96 2A02 ..."], sig: ["detached sig of info_hash for nested #3"]}
+      {signers: ["AE96 2A02 ..."], sig: ["detached sig of info_hash for nested #1"]},
+      {signers: ["AE96 2A02 ..."], sig: ["detached sig of info_hash for nested #2"]},
+      {signers: ["AE96 2A02 ..."], sig: ["detached sig of info_hash for nested #3"]}
     ]
   }
 }
