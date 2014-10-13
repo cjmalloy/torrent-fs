@@ -3,6 +3,8 @@ package com.cjmalloy.torrentfs;
 import java.io.File;
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.nio.file.Files;
+import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -112,9 +114,24 @@ public class TfsClient
         TfsTorrent t = lookup.get(infoHash);
         t.tfsData = meta;
         t.nested = addTorrents(meta.getNestedTorrents());
+        symlinkNested(infoHash);
+    }
 
+    private void symlinkNested(String infoHash) throws IOException
+    {
+        TfsTorrent t = lookup.get(infoHash);
         if (t.nested == null) return;
 
-        //TODO: symlink nested now?
+        File tRoot = new File(rootPath + infoHash + "/");
+        for (int i=0; i<t.nested.size(); i++)
+        {
+            TfsTorrent n  = t.nested.get(i);
+            String mount = t.tfsData.nested.get(i).mount;
+            File nMount = new File(rootPath + mount);
+            if (nMount.exists()) continue;
+            //TODO: might need to create some folders
+            File nRoot  = new File(rootPath + t.infoHash + "/");
+            Files.createSymbolicLink(nMount.toPath(), nRoot.toPath());
+        }
     }
 }
