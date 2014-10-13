@@ -49,10 +49,10 @@
       <version>1.0.5</version>
     </dependency>
     <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.3</version>
-    </dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.3</version>
+      </dependency>
   </dependencies>
 
   <build>
