@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cjmalloy.torrentfs.model.Meta;
 import com.turn.ttorrent.client.Client;
+import com.turn.ttorrent.client.Client.ClientState;
 
 
 public class TfsTorrent
@@ -17,5 +18,11 @@ public class TfsTorrent
     {
         this.client = c;
         this.infoHash = hash;
+    }
+
+    public boolean isReady()
+    {
+        return client.getState() == ClientState.SEEDING ||
+               client.getState() == ClientState.DONE;
     }
 }

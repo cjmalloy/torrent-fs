@@ -68,6 +68,11 @@ public class TfsClient
         return ret;
     }
 
+    public TfsTorrent getTorrent(String infoHash)
+    {
+        return lookup.get(infoHash);
+    }
+
     protected void onClientUpdate(Client c, ClientState state)
     {
         logger.debug("torrent " + state.toString());
@@ -104,18 +109,6 @@ public class TfsClient
         }
     }
 
-    private void tryToAddTfs(String infoHash) throws IOException
-    {
-        File metaFile = new File(rootPath + infoHash + "/.tfs");
-        if (!metaFile.exists()) return;
-
-        Meta meta = Meta.load(metaFile);
-        TfsTorrent t = lookup.get(infoHash);
-        t.tfsData = meta;
-        t.nested = addTorrents(meta.getNestedTorrents());
-        symlinkNested(infoHash);
-    }
-
     private void symlinkNested(String infoHash) throws IOException
     {
         TfsTorrent t = lookup.get(infoHash);
@@ -132,5 +125,17 @@ public class TfsClient
             File nRoot  = new File(rootPath + n.infoHash + "/");
             Files.createSymbolicLink(nMount.toPath(), nRoot.toPath());
         }
+    }
+
+    private void tryToAddTfs(String infoHash) throws IOException
+    {
+        File metaFile = new File(rootPath + infoHash + "/.tfs");
+        if (!metaFile.exists()) return;
+
+        Meta meta = Meta.load(metaFile);
+        TfsTorrent t = lookup.get(infoHash);
+        t.tfsData = meta;
+        t.nested = addTorrents(meta.getNestedTorrents());
+        symlinkNested(infoHash);
     }
 }

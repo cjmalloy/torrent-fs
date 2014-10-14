@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.cjmalloy.torrentfs.extension.Extension;
 import com.cjmalloy.torrentfs.extension.Extension.ExtensionFactory;
@@ -49,7 +50,7 @@ public class Meta implements HasJson
 
 
     public List<Nested> nested;
-    public List<Extension> extensions;
+    public Map<String, Extension> extensions;
 
     public List<Torrent> getNestedTorrents() throws IOException
     {
@@ -90,7 +91,7 @@ public class Meta implements HasJson
         }
         if (json.has("extensions"))
         {
-            extensions = ExtensionFactory.load(JsonUtil.parseStringList(json.get("extensions").getAsJsonArray()));
+            extensions = ExtensionFactory.load(json, JsonUtil.parseStringList(json.get("extensions").getAsJsonArray()));
         }
         return this;
     }

@@ -6,9 +6,13 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.channels.UnsupportedAddressTypeException;
+import java.util.Arrays;
 import java.util.Enumeration;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.AllowSymLinkAliasChecker;
+import org.eclipse.jetty.server.handler.ContextHandler.AliasCheck;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.glassfish.jersey.servlet.ServletContainer;
@@ -61,6 +65,14 @@ public class Entry
         ServletHolder rest = context.addServlet(ServletContainer.class, "/*");
         rest.setInitOrder(1);
         rest.setInitParameter("jersey.config.server.provider.packages","com.cjmalloy.torrentfs.server.remote.rest");
+
+        // Static Files (needed for the html extension)
+        ServletHolder html = new ServletHolder(DefaultServlet.class);
+        html.setInitParameter("resourceBase", tfsCache);
+        html.setInitParameter("dirAllowed", "true");
+        html.setInitParameter("pathInfoOnly", "true");
+        context.addServlet(html,"/ext/html/static/*");
+        context.setAliasChecks(Arrays.asList((AliasCheck) new AllowSymLinkAliasChecker()));
 
         //uPnP
         PortMapping desiredMapping = new PortMapping(
