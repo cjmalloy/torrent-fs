@@ -16,7 +16,7 @@ import org.apache.commons.io.IOUtils;
 
 import com.cjmalloy.torrentfs.TfsTorrent;
 import com.cjmalloy.torrentfs.server.TfsClientSingleton;
-import com.cjmalloy.torrentfs.server.model.TorrentStatus;
+import com.cjmalloy.torrentfs.shared.model.TorrentStatus;
 import com.cjmalloy.torrentfs.util.TfsUtil;
 import com.turn.ttorrent.bcodec.BDecoder;
 import com.turn.ttorrent.common.Torrent;

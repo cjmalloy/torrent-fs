@@ -1,4 +1,4 @@
-package com.cjmalloy.torrentfs.server.model;
+package com.cjmalloy.torrentfs.shared.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
