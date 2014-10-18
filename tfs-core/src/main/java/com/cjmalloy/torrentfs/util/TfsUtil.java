@@ -5,7 +5,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
-import org.glassfish.jersey.internal.util.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 import com.google.gson.JsonElement;
 import com.turn.ttorrent.bcodec.BEValue;
@@ -16,7 +16,7 @@ public class TfsUtil
 {
     public static Torrent getTorrentFromBencode(String torrent_base64) throws IOException
     {
-        return new Torrent(Base64.decode(torrent_base64.getBytes(Charset.forName("UTF-8"))), false);
+        return new Torrent(Base64.decodeBase64(torrent_base64.getBytes(Charset.forName("UTF-8"))), false);
     }
 
     public static Torrent getTorrentFromJson(Encoding encoding, JsonElement torrent) throws IOException
