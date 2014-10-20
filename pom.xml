@@ -32,16 +32,16 @@
     </dependency>
   </dependencies>
 
-  <distributionManagement>
+  <repositories>
     <repository>
       <id>cjmalloy-repo</id>
       <name>cjmalloy-repo-releases</name>
       <url>http://cjmalloy.com/m2/libs-release-local</url>
     </repository>
-    <snapshotRepository>
+    <repository>
       <id>cjmalloy-repo</id>
       <name>cjmalloy-repo-snapshots</name>
       <url>http://cjmalloy.com/m2/libs-snapshot-local</url>
-    </snapshotRepository>
-  </distributionManagement>
+    </repository>
+  </repositories>
 </project>
