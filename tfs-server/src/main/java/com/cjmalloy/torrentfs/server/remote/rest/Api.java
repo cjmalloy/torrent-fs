@@ -65,7 +65,7 @@ public class Api
     public TorrentStatus torrentStatus(@PathParam("info_hash") String infoHash)
     {
         TfsTorrent t = TfsClientSingleton.get().getTorrent(infoHash);
-        if (t == null) return null;
+        if (t == null) new WebApplicationException(404);
 
         return ModelUtil.getTorrentStatus(t);
     }
