@@ -31,4 +31,12 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <distributionManagement>
+    <repository>
+      <id>cjmalloy-repo</id>
+      <name>cjmalloy-repo-releases</name>
+      <url>http://cjmalloy.com/m2/ext-release-local</url>
+    </repository>
+   </distributionManagement>
 </project>
