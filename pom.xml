@@ -35,13 +35,7 @@
   <repositories>
     <repository>
       <id>cjmalloy-repo</id>
-      <name>cjmalloy-repo-releases</name>
-      <url>http://cjmalloy.com/m2/libs-release-local</url>
-    </repository>
-    <repository>
-      <id>cjmalloy-repo</id>
-      <name>cjmalloy-repo-snapshots</name>
-      <url>http://cjmalloy.com/m2/libs-snapshot-local</url>
+      <url>http://cjmalloy.com/m2/libs-snapshot</url>
     </repository>
   </repositories>
 </project>
