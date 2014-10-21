@@ -51,3 +51,9 @@ The .tfs file contains the netsted torrents, GPG signatures, and a list of exten
   }
 }
 ```
+
+See Also
+========
+
+Tfs Browser: A module to browse html content.  
+https://github.com/cjmalloy/tfs-browser
