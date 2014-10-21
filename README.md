@@ -7,7 +7,7 @@ The goal of torrent-fs (tfs) is to extend the existing bittorent spec to create 
 
 * Metadata
 * Nested torrents
-* PGP signing
+* GPG signing
 * Semantic extensibility
 * Dual bencode/json file format support
 
