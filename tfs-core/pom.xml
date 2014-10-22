@@ -27,7 +27,7 @@
     <dependency>
       <groupId>com.turn</groupId>
       <artifactId>ttorrent</artifactId>
-      <version>1.5-SNAPSHOT</version>
+      <version>1.5-SNAPSHOT-cjmalloy</version>
    </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
