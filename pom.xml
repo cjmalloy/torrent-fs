@@ -17,6 +17,34 @@
     <module>tfs-standalone</module>
   </modules>
 
+  <scm>
+    <connection>scm:git:git://github.com/cjmalloy/torrent-fs.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/cjmalloy/torrent-fs.git</developerConnection>
+    <url>http://github.com/cjmalloy/torrent-fs</url>
+    <tag>master</tag>
+  </scm>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/cjmalloy/torrent-fs/issues</url>
+  </issueManagement>
+
+  <developers>
+    <developer>
+      <email>cjmalloy@gmail.com</email>
+      <name>Chris Malloy</name>
+      <url>https://cjmalloy.com</url>
+      <id>cjmalloy</id>
+    </developer>
+  </developers>
+
   <properties>
     <maven.compiler.target>1.7</maven.compiler.target>
     <maven.compiler.source>1.7</maven.compiler.source>
