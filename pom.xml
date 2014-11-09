@@ -4,7 +4,7 @@
 
   <groupId>com.cjmalloy</groupId>
   <artifactId>torrent-fs</artifactId>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.2</version>
   <packaging>pom</packaging>
 
   <name>torrent-fs</name>
@@ -63,7 +63,7 @@
   <repositories>
     <repository>
       <id>cjmalloy-repo</id>
-      <url>http://cjmalloy.com/m2/libs-snapshot</url>
+      <url>http://cjmalloy.com/m2/libs-release</url>
     </repository>
   </repositories>
 </project>
