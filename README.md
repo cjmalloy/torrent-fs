@@ -58,5 +58,5 @@ See Also
 Tfs Browser: A module to browse html content.  
 https://github.com/cjmalloy/tfs-browser
 
-Tfs GUI: A gui to manage torrent file systems.
+Tfs GUI: A gui to manage torrent file systems.  
 https://github.com/cjmalloy/tfs-gui
