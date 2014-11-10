@@ -1,10 +1,13 @@
 package com.cjmalloy.torrentfs.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 
 public class JsonUtil
@@ -31,6 +34,26 @@ public class JsonUtil
         return l;
     }
 
+    public static JsonArray writeList(List<? extends HasJson> nested)
+    {
+        JsonArray a = new JsonArray();
+        for (HasJson j : nested)
+        {
+            a.add(j.writeJson());
+        }
+        return a;
+    }
+
+    public static JsonElement writeStringList(Collection<String> l)
+    {
+        JsonArray a = new JsonArray();
+        for (String s : l)
+        {
+            a.add(new JsonPrimitive(s));
+        }
+        return a;
+    }
+
     public interface Factory<T>
     {
         T create();
@@ -39,5 +62,6 @@ public class JsonUtil
     public interface HasJson
     {
         HasJson parseJson(JsonObject o);
+        JsonElement writeJson();
     }
 }

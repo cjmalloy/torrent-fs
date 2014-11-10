@@ -8,6 +8,7 @@ import com.cjmalloy.torrentfs.util.TfsUtil;
 import com.cjmalloy.torrentfs.util.TfsUtil.Encoding;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.turn.ttorrent.common.Torrent;
 
 
@@ -46,5 +47,15 @@ public class Nested implements HasJson
             torrent = o.get("torrent");
         }
         return this;
+    }
+
+    @Override
+    public JsonElement writeJson()
+    {
+        JsonObject o = new JsonObject();
+        o.add("encoding", new JsonPrimitive(encoding.toString()));
+        o.add("mount", new JsonPrimitive(mount));
+        o.add("torrent", torrent);
+        return o;
     }
 }

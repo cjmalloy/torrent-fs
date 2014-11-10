@@ -10,6 +10,8 @@ import com.google.gson.JsonObject;
 
 public interface Extension extends HasJson
 {
+    String jsonId();
+
     @Override
     Extension parseJson(JsonObject o);
 
@@ -34,9 +36,9 @@ public interface Extension extends HasJson
         {
             switch (ext)
             {
-            case "gpg":      return new GpgExtension();
-            case "html":     return new HtmlExtension();
-            case "revision": return new RevisionExtension();
+            case GpgExtension.JSON_ID:      return new GpgExtension();
+            case HtmlExtension.JSON_ID:     return new HtmlExtension();
+            case RevisionExtension.JSON_ID: return new RevisionExtension();
             }
             return null;
         }
