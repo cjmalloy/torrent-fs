@@ -14,6 +14,7 @@ import com.cjmalloy.torrentfs.util.JsonUtil.HasJson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.turn.ttorrent.common.Torrent;
 
 
@@ -96,8 +97,39 @@ public class Meta implements HasJson
         return this;
     }
 
+    @Override
+    public JsonElement writeJson()
+    {
+        JsonObject o = new JsonObject();
+        if (author != null)
+        {
+            o.add("author", new JsonPrimitive(author));
+        }
+        if (origin != null)
+        {
+            o.add("origin", new JsonPrimitive(origin));
+        }
+        o.add("solicitation", new JsonPrimitive(solicitation));
+        o.add("adult", new JsonPrimitive(adult));
+        o.add("doNotCache", new JsonPrimitive(doNotCache));
+        if (nested != null)
+        {
+            o.add("nested", JsonUtil.writeList(nested));
+        }
+        if (extensions != null)
+        {
+            o.add("extensions", JsonUtil.writeStringList(extensions.keySet()));
+            for (Extension e : extensions.values())
+            {
+                o.add(e.jsonId(), e.writeJson());
+            }
+        }
+        return o;
+    }
+
     public static Meta load(File metaFile) throws IOException, IllegalStateException
     {
+        if (!metaFile.exists()) return null;
         JsonElement json = JSON_PARSER.parse(new FileReader(metaFile));
         return new Meta().parseJson(json.getAsJsonObject());
     }
