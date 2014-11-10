@@ -12,6 +12,7 @@
 
   <modules>
     <module>tfs-core</module>
+    <module>tfs-cli</module>
     <module>tfs-shared</module>
     <module>tfs-server</module>
     <module>tfs-standalone</module>
