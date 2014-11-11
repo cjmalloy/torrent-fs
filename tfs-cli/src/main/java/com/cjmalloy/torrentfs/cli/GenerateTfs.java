@@ -3,14 +3,12 @@ package com.cjmalloy.torrentfs.cli;
 import jargs.gnu.CmdLineParser;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.PatternLayout;
@@ -96,7 +94,6 @@ public class GenerateTfs
 
         String[] otherArgs = parser.getRemainingArgs();
 
-        FileOutputStream fos = null;
         try
         {
             // Process the announce URLs into URIs
@@ -117,25 +114,13 @@ public class GenerateTfs
 
             String creator = String.format("%s (ttorrent)", System.getProperty("user.name"));
 
-            List<Torrent> torrent = TfsUtil.generateTorrentFromTfs(source, Encoding.BENCODE_BASE64, announceList, creator);
-
-            for (Torrent t : torrent)
-            {
-                fos = new FileOutputStream("./" + t.getHexInfoHash() + ".torrent");
-                t.save(fos);
-                IOUtils.closeQuietly(fos);
-                fos = null;
-            }
-
+            List<Torrent> torrents = TfsUtil.generateTorrentFromTfs(source, Encoding.BENCODE_BASE64, announceList, creator);
+            TfsUtil.saveTorrents(new File("."), torrents);
         }
         catch (Exception e)
         {
             logger.error("{}", e.getMessage(), e);
             System.exit(2);
-        }
-        finally
-        {
-            if (fos != null) IOUtils.closeQuietly(fos);
         }
     }
 }

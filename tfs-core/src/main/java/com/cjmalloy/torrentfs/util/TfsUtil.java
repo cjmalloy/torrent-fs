@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
@@ -146,6 +147,25 @@ public class TfsUtil
             return null;
         }
         return null;
+    }
+
+    public static void saveTorrents(File dir, List<Torrent> torrents) throws IOException
+    {
+        FileOutputStream fos = null;
+        for (Torrent t : torrents)
+        {
+            try
+            {
+                fos = new FileOutputStream(Paths.get(dir.toString(), t.getHexInfoHash() + ".torrent").toFile());
+                t.save(fos);
+                IOUtils.closeQuietly(fos);
+                fos = null;
+            }
+            finally
+            {
+                if (fos != null) IOUtils.closeQuietly(fos);
+            }
+        }
     }
 
     public enum Encoding
