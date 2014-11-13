@@ -96,10 +96,10 @@ public class TfsUtil
             Torrent t = ts.get(ts.size()-1);
             n.encoding = encoding;
             n.torrent = getJsonFromTorrent(encoding, t);
-            FileOutputStream fos = new FileOutputStream(rootTfs);
-            fos.write(tfs.writeJson().toString().getBytes(Charset.forName("UTF-8")));
-            fos.close();
         }
+        FileOutputStream fos = new FileOutputStream(rootTfs);
+        fos.write(tfs.writeJson().toString().getBytes(Charset.forName("UTF-8")));
+        fos.close();
         ret.add(generateLegacyTorrent(source, ignoreFilter, announceList, createdBy));
         return ret;
     }
