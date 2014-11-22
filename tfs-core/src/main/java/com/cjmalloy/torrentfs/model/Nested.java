@@ -27,6 +27,8 @@ public class Nested implements HasJson
     public String mount;
     public JsonElement torrent;
 
+    public transient Meta meta = null;
+
     public Torrent getTorrent() throws IOException
     {
         return TfsUtil.getTorrentFromJson(encoding, torrent);
