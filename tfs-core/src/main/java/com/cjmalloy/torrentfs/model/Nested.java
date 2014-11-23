@@ -1,5 +1,6 @@
 package com.cjmalloy.torrentfs.model;
 
+import java.io.File;
 import java.io.IOException;
 
 import com.cjmalloy.torrentfs.util.JsonUtil.Factory;
@@ -27,6 +28,7 @@ public class Nested implements HasJson
     public String mount;
     public JsonElement torrent;
 
+    public transient File absolutePath = null;
     public transient Meta meta = null;
 
     public Torrent getTorrent() throws IOException
