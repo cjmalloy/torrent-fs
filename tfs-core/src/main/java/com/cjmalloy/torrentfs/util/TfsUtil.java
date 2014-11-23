@@ -176,10 +176,9 @@ public class TfsUtil
             fos.close();
             fos = null;
         }
-        catch (IOException e)
+        finally
         {
             if (fos != null) IOUtils.closeQuietly(fos);
-            throw e;
         }
     }
 
