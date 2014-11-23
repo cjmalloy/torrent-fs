@@ -129,7 +129,7 @@ public class Meta implements HasJson
 
     public static Meta load(File metaFile) throws IOException, IllegalStateException
     {
-        if (!metaFile.exists()) return null;
+        if (metaFile == null || !metaFile.exists()) return null;
         JsonElement json = JSON_PARSER.parse(new FileReader(metaFile));
         return new Meta().parseJson(json.getAsJsonObject());
     }
