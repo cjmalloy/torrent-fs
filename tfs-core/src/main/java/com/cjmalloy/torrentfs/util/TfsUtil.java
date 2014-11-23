@@ -97,9 +97,7 @@ public class TfsUtil
             n.encoding = encoding;
             n.torrent = getJsonFromTorrent(encoding, t);
         }
-        FileOutputStream fos = new FileOutputStream(rootTfs);
-        fos.write(JsonUtil.prettyPrint(tfs.writeJson()).getBytes(Charset.forName("UTF-8")));
-        fos.close();
+        writeTfs(rootTfs, tfs);
         ret.add(generateLegacyTorrent(source, ignoreFilter, announceList, createdBy));
         return ret;
     }
@@ -165,6 +163,23 @@ public class TfsUtil
             {
                 if (fos != null) IOUtils.closeQuietly(fos);
             }
+        }
+    }
+
+    public static void writeTfs(File f, Meta meta) throws IOException
+    {
+        FileOutputStream fos = null;
+        try
+        {
+            fos = new FileOutputStream(f);
+            fos.write(JsonUtil.prettyPrint(meta.writeJson()).getBytes(Charset.forName("UTF-8")));
+            fos.close();
+            fos = null;
+        }
+        catch (IOException e)
+        {
+            if (fos != null) IOUtils.closeQuietly(fos);
+            throw e;
         }
     }
 
