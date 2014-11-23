@@ -18,6 +18,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
+import com.cjmalloy.torrentfs.model.Encoding;
 import com.cjmalloy.torrentfs.model.Meta;
 import com.cjmalloy.torrentfs.model.Nested;
 import com.google.gson.JsonElement;
@@ -179,35 +180,6 @@ public class TfsUtil
         finally
         {
             if (fos != null) IOUtils.closeQuietly(fos);
-        }
-    }
-
-    public enum Encoding
-    {
-        BENCODE_BASE64("bencode"),
-        MAGNET("magnet"),
-        JSON("json");
-
-        private String strValue;
-
-        Encoding(String strValue)
-        {
-            this.strValue = strValue;
-        }
-
-        @Override
-        public String toString()
-        {
-            return strValue;
-        }
-
-        public static Encoding getEncoding(String strValue)
-        {
-            for (Encoding enc : Encoding.values())
-            {
-                if (enc.toString().equalsIgnoreCase(strValue)) return enc;
-            }
-            return null;
         }
     }
 }

@@ -6,7 +6,6 @@ import java.io.IOException;
 import com.cjmalloy.torrentfs.util.JsonUtil.Factory;
 import com.cjmalloy.torrentfs.util.JsonUtil.HasJson;
 import com.cjmalloy.torrentfs.util.TfsUtil;
-import com.cjmalloy.torrentfs.util.TfsUtil.Encoding;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;

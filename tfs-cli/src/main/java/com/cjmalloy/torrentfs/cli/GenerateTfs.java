@@ -15,8 +15,8 @@ import org.apache.log4j.PatternLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cjmalloy.torrentfs.model.Encoding;
 import com.cjmalloy.torrentfs.util.TfsUtil;
-import com.cjmalloy.torrentfs.util.TfsUtil.Encoding;
 import com.turn.ttorrent.cli.TorrentMain;
 import com.turn.ttorrent.common.Torrent;
 
