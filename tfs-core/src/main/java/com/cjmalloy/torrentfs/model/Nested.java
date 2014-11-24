@@ -23,6 +23,7 @@ public class Nested implements HasJson
         }
     };
 
+    public boolean readOnly = false;
     public Encoding encoding;
     public String mount;
     public JsonElement torrent;
@@ -37,6 +38,10 @@ public class Nested implements HasJson
 
     public Nested parseJson(JsonObject o)
     {
+        if (o.has("readOnly"))
+        {
+            readOnly = o.get("readOnly").getAsBoolean();
+        }
         if (o.has("encoding"))
         {
             encoding = Encoding.getEncoding(o.get("encoding").getAsString());
@@ -56,6 +61,7 @@ public class Nested implements HasJson
     public JsonElement writeJson()
     {
         JsonObject o = new JsonObject();
+        o.add("readOnly", new JsonPrimitive(readOnly));
         o.add("encoding", new JsonPrimitive(encoding.toString()));
         o.add("mount", new JsonPrimitive(mount));
         o.add("torrent", torrent);
