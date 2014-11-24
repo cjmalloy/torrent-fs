@@ -90,6 +90,8 @@ public class TfsUtil
         {
             File nestedSource = Paths.get(source.toString(), n.mount).toFile();
             ignoreFilter.add(nestedSource.getCanonicalPath());
+            if (n.readOnly) continue;
+
             List<Torrent> ts = generateTorrentFromTfs(nestedSource, encoding, announceList, createdBy);
             ret.addAll(ts);
 
