@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,7 +63,18 @@ public class TfsUtil
         return Torrent.create(source, includeFiles, announceList, createdBy);
     }
 
-    public static List<Torrent> generateTorrentFromTfs(File source, Encoding encoding, List<List<URI>> announceList, String createdBy)
+    /**
+     * Generate a list of torrent files for this tfs.
+     *
+     * @param source the root directory or file
+     * @param encoding the encoding to use for nested torrents
+     * @param announceList the announce list
+     * @param createdBy creator signature
+     * @param cache cache directory to initialize for seeding (null to skip)
+     * @param link use symbolic links instead of copying to the cache directory
+     * @return the list of torrent files
+     */
+    public static List<Torrent> generateTorrentFromTfs(File source, Encoding encoding, List<List<URI>> announceList, String createdBy, File cache, boolean link)
             throws InterruptedException, IOException
     {
         Meta tfs = null;
@@ -81,7 +93,9 @@ public class TfsUtil
         {
             // No .tfs file found, or this tfs torrent has no nested torrents
             // We can just use the legacy generator
-            return Arrays.asList(generateLegacyTorrent(source, null, announceList, createdBy));
+            Torrent t = generateLegacyTorrent(source, null, announceList, createdBy);
+            initSeedCache(source, t.getHexInfoHash(), cache, link);
+            return Arrays.asList(t);
         }
 
         List<Torrent> ret = new ArrayList<>();
@@ -92,7 +106,11 @@ public class TfsUtil
             ignoreFilter.add(nestedSource.getCanonicalPath());
             if (n.readOnly) continue;
 
-            List<Torrent> ts = generateTorrentFromTfs(nestedSource, encoding, announceList, createdBy);
+            List<Torrent> ts = generateTorrentFromTfs(nestedSource, encoding, announceList, createdBy, cache, link);
+            for (Torrent t : ts)
+            {
+                initSeedCache(n.absolutePath, t.getHexInfoHash(), cache, link);
+            }
             ret.addAll(ts);
 
             // The last torrent corresponds to nested torrent we are currently iterating
@@ -101,7 +119,9 @@ public class TfsUtil
             n.torrent = getJsonFromTorrent(encoding, t);
         }
         writeTfs(rootTfs, tfs);
-        ret.add(generateLegacyTorrent(source, ignoreFilter, announceList, createdBy));
+        Torrent t = generateLegacyTorrent(source, ignoreFilter, announceList, createdBy);
+        initSeedCache(source, t.getHexInfoHash(), cache, link);
+        ret.add(t);
         return ret;
     }
 
@@ -148,6 +168,29 @@ public class TfsUtil
             return null;
         }
         return null;
+    }
+
+    public static void initSeedCache(File source, String infoHash, File cache, boolean link) throws IOException
+    {
+        if (cache == null) return;
+
+        File seedDir = new File(cache, infoHash);
+        if (seedDir.exists()) return;
+
+        seedDir.mkdir();
+        File target = new File(seedDir, source.getName());
+        if (link)
+        {
+            Files.createSymbolicLink(target.toPath(), source.toPath());
+        }
+        else if (source.isDirectory())
+        {
+            FileUtils.copyDirectory(source, target);
+        }
+        else
+        {
+            FileUtils.copyFile(source, target);
+        }
     }
 
     public static void saveTorrents(File dir, List<Torrent> torrents) throws IOException

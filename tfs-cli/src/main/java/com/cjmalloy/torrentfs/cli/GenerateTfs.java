@@ -50,6 +50,8 @@ public class GenerateTfs
         s.println("  -h,--help             Show this help and exit.");
         s.println();
         s.println("  -a,--announce         Tracker URL (can be repeated).");
+        s.println("  -c,--cache            Seed cache to initialize");
+        s.println("  -s,--symbolic-links   Use symbolic links to initialize seed cache");
         s.println();
     }
 
@@ -67,8 +69,10 @@ public class GenerateTfs
         BasicConfigurator.configure(new ConsoleAppender(new PatternLayout("%-5p: %m%n")));
 
         CmdLineParser parser = new CmdLineParser();
-        CmdLineParser.Option help = parser.addBooleanOption('h', "help");
-        CmdLineParser.Option announce = parser.addStringOption('a', "announce");
+        CmdLineParser.Option argHelp = parser.addBooleanOption('h', "help");
+        CmdLineParser.Option argAnnounce = parser.addStringOption('a', "announce");
+        CmdLineParser.Option argCache = parser.addStringOption('c', "cache");
+        CmdLineParser.Option argLink = parser.addBooleanOption('s', "symbolic-links");
 
         try
         {
@@ -82,7 +86,7 @@ public class GenerateTfs
         }
 
         // Display help and exit if requested
-        if (Boolean.TRUE.equals((Boolean) parser.getOptionValue(help)))
+        if (Boolean.TRUE.equals((Boolean) parser.getOptionValue(argHelp)))
         {
             usage(System.out);
             System.exit(0);
@@ -90,7 +94,11 @@ public class GenerateTfs
 
         // For repeated announce urls
         @SuppressWarnings("unchecked")
-        Vector<String> announceURLs = (Vector<String>) parser.getOptionValues(announce);
+        Vector<String> announceURLs = (Vector<String>) parser.getOptionValues(argAnnounce);
+        String cache = (String) parser.getOptionValue(argCache, null);
+        boolean link = (Boolean) parser.getOptionValue(argLink, false);
+
+        File cacheFile = cache == null ? null : new File(cache);
 
         String[] otherArgs = parser.getRemainingArgs();
 
@@ -114,7 +122,7 @@ public class GenerateTfs
 
             String creator = String.format("%s (ttorrent)", System.getProperty("user.name"));
 
-            List<Torrent> torrents = TfsUtil.generateTorrentFromTfs(source, Encoding.BENCODE_BASE64, announceList, creator);
+            List<Torrent> torrents = TfsUtil.generateTorrentFromTfs(source, Encoding.BENCODE_BASE64, announceList, creator, cacheFile, link);
             TfsUtil.saveTorrents(new File("."), torrents);
         }
         catch (Exception e)
