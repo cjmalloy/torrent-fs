@@ -34,7 +34,7 @@
     <repository>
       <id>snapshots</id>
       <name>snapshots</name>
-      <url>http://cjmalloy.com/m2/libs-snapshot-local</url>
+      <url>http://cjmalloy.com/m2/libs-release-local</url>
     </repository>
   </distributionManagement>
 
