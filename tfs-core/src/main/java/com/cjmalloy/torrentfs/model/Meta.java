@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
+
 import com.cjmalloy.torrentfs.extension.Extension;
 import com.cjmalloy.torrentfs.extension.Extension.ExtensionFactory;
 import com.cjmalloy.torrentfs.util.JsonUtil;
@@ -130,7 +132,10 @@ public class Meta implements HasJson
     public static Meta load(File metaFile) throws IOException, IllegalStateException
     {
         if (metaFile == null || !metaFile.exists()) return null;
-        JsonElement json = JSON_PARSER.parse(new FileReader(metaFile));
+
+        FileReader fr = new FileReader(metaFile);
+        JsonElement json = JSON_PARSER.parse(fr);
+        IOUtils.closeQuietly(fr);
         return new Meta().parseJson(json.getAsJsonObject());
     }
 }
