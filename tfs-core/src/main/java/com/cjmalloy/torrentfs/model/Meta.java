@@ -142,7 +142,7 @@ public class Meta implements HasJson
         }
         finally
         {
-            IOUtils.closeQuietly(fr);
+            if (fr != null) IOUtils.closeQuietly(fr);
         }
     }
 }

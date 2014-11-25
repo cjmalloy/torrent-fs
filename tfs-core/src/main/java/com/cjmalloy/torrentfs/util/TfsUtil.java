@@ -176,8 +176,6 @@ public class TfsUtil
         {
             fos = new FileOutputStream(f);
             fos.write(JsonUtil.prettyPrint(meta.writeJson()).getBytes(Charset.forName("UTF-8")));
-            fos.close();
-            fos = null;
         }
         finally
         {
