@@ -3,22 +3,20 @@ package com.cjmalloy.torrentfs.cli;
 import jargs.gnu.CmdLineParser;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.PatternLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cjmalloy.torrentfs.model.Encoding;
 import com.cjmalloy.torrentfs.util.TfsUtil;
-import com.cjmalloy.torrentfs.util.TfsUtil.Encoding;
 import com.turn.ttorrent.cli.TorrentMain;
 import com.turn.ttorrent.common.Torrent;
 
@@ -52,6 +50,8 @@ public class GenerateTfs
         s.println("  -h,--help             Show this help and exit.");
         s.println();
         s.println("  -a,--announce         Tracker URL (can be repeated).");
+        s.println("  -c,--cache            Seed cache to initialize");
+        s.println("  -s,--symbolic-links   Use symbolic links to initialize seed cache");
         s.println();
     }
 
@@ -69,8 +69,10 @@ public class GenerateTfs
         BasicConfigurator.configure(new ConsoleAppender(new PatternLayout("%-5p: %m%n")));
 
         CmdLineParser parser = new CmdLineParser();
-        CmdLineParser.Option help = parser.addBooleanOption('h', "help");
-        CmdLineParser.Option announce = parser.addStringOption('a', "announce");
+        CmdLineParser.Option argHelp = parser.addBooleanOption('h', "help");
+        CmdLineParser.Option argAnnounce = parser.addStringOption('a', "announce");
+        CmdLineParser.Option argCache = parser.addStringOption('c', "cache");
+        CmdLineParser.Option argLink = parser.addBooleanOption('s', "symbolic-links");
 
         try
         {
@@ -84,7 +86,7 @@ public class GenerateTfs
         }
 
         // Display help and exit if requested
-        if (Boolean.TRUE.equals((Boolean) parser.getOptionValue(help)))
+        if (Boolean.TRUE.equals((Boolean) parser.getOptionValue(argHelp)))
         {
             usage(System.out);
             System.exit(0);
@@ -92,11 +94,14 @@ public class GenerateTfs
 
         // For repeated announce urls
         @SuppressWarnings("unchecked")
-        Vector<String> announceURLs = (Vector<String>) parser.getOptionValues(announce);
+        Vector<String> announceURLs = (Vector<String>) parser.getOptionValues(argAnnounce);
+        String cache = (String) parser.getOptionValue(argCache, null);
+        boolean link = (Boolean) parser.getOptionValue(argLink, false);
+
+        File cacheFile = cache == null ? null : new File(cache);
 
         String[] otherArgs = parser.getRemainingArgs();
 
-        FileOutputStream fos = null;
         try
         {
             // Process the announce URLs into URIs
@@ -117,25 +122,13 @@ public class GenerateTfs
 
             String creator = String.format("%s (ttorrent)", System.getProperty("user.name"));
 
-            List<Torrent> torrent = TfsUtil.generateTorrentFromTfs(source, Encoding.BENCODE_BASE64, announceList, creator);
-
-            for (Torrent t : torrent)
-            {
-                fos = new FileOutputStream("./" + t.getHexInfoHash() + ".torrent");
-                t.save(fos);
-                IOUtils.closeQuietly(fos);
-                fos = null;
-            }
-
+            List<Torrent> torrents = TfsUtil.generateTorrentFromTfs(source, Encoding.BENCODE_BASE64, announceList, creator, cacheFile, link);
+            TfsUtil.saveTorrents(new File("."), torrents);
         }
         catch (Exception e)
         {
             logger.error("{}", e.getMessage(), e);
             System.exit(2);
-        }
-        finally
-        {
-            if (fos != null) IOUtils.closeQuietly(fos);
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.cjmalloy.torrentfs.util;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -8,6 +10,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.internal.Streams;
+import com.google.gson.stream.JsonWriter;
 
 
 public class JsonUtil
@@ -32,6 +36,20 @@ public class JsonUtil
             l.add(n.get(i).getAsString());
         }
         return l;
+    }
+
+    public static String prettyPrint(JsonElement json)
+    {
+        try {
+            StringWriter stringWriter = new StringWriter();
+            JsonWriter jsonWriter = new JsonWriter(stringWriter);
+            jsonWriter.setLenient(true);
+            jsonWriter.setIndent("    ");
+            Streams.write(json, jsonWriter);
+            return stringWriter.toString();
+          } catch (IOException e) {
+            throw new AssertionError(e);
+          }
     }
 
     public static JsonArray writeList(List<? extends HasJson> nested)
