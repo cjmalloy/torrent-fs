@@ -133,9 +133,16 @@ public class Meta implements HasJson
     {
         if (metaFile == null || !metaFile.exists()) return null;
 
-        FileReader fr = new FileReader(metaFile);
-        JsonElement json = JSON_PARSER.parse(fr);
-        IOUtils.closeQuietly(fr);
-        return new Meta().parseJson(json.getAsJsonObject());
+        FileReader fr = null;
+        try
+        {
+            fr = new FileReader(metaFile);
+            JsonElement json = JSON_PARSER.parse(fr);
+            return new Meta().parseJson(json.getAsJsonObject());
+        }
+        finally
+        {
+            IOUtils.closeQuietly(fr);
+        }
     }
 }
