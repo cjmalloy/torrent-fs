@@ -33,7 +33,7 @@ public class TfsUtil
     {
         if (!source.isDirectory())
         {
-            return Torrent.create(source, announceList, createdBy);
+            return Torrent.create(source, Torrent.DEFAULT_PIECE_LENGTH, announceList, createdBy);
         }
 
         IOFileFilter fileFilter = TrueFileFilter.TRUE;
@@ -60,7 +60,7 @@ public class TfsUtil
             };
         }
         List<File> includeFiles = new ArrayList<>(FileUtils.listFiles(source, fileFilter, TrueFileFilter.TRUE));
-        return Torrent.create(source, includeFiles, announceList, createdBy);
+        return Torrent.create(source, includeFiles, Torrent.DEFAULT_PIECE_LENGTH, announceList, createdBy);
     }
 
     /**
