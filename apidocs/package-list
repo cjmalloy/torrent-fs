@@ -1,0 +1,9 @@
+com.cjmalloy.torrentfs
+com.cjmalloy.torrentfs.cli
+com.cjmalloy.torrentfs.extension
+com.cjmalloy.torrentfs.model
+com.cjmalloy.torrentfs.server
+com.cjmalloy.torrentfs.server.remote.rest
+com.cjmalloy.torrentfs.server.util
+com.cjmalloy.torrentfs.shared.model
+com.cjmalloy.torrentfs.util
