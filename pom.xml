@@ -30,6 +30,10 @@
   </issueManagement>
 
   <distributionManagement>
+    <site>
+      <id>cjmalloy.github.io/torrent-fs</id>
+      <url>https://cjmalloy.github.io/torrent-fs</url>
+    </site>
     <repository>
       <id>snapshots</id>
       <name>snapshots</name>
@@ -67,6 +71,21 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.4</version>
+        <configuration>
+          <links>
+            <link>https://cjmalloy.github.io/torrent-fs/apidocs</link>
+          </links>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <repositories>
     <repository>
