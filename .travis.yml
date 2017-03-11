@@ -1,1 +1,7 @@
 language: java
+cache:
+  directories:
+  - "$HOME/.m2"
+install:
+- curl -o $HOME/.m2/settings.xml
+  https://raw.githubusercontent.com/cjmalloy/cjmalloy/master/mvn/settings.xml
