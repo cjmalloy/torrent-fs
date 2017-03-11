@@ -14,6 +14,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class Meta implements HasJson {
     }
   }
 
-  public List<Torrent> getNestedTorrents() throws IOException {
+  public List<Torrent> getNestedTorrents() throws IOException, NoSuchAlgorithmException {
     List<Torrent> ret = new ArrayList<Torrent>();
     for (Nested n : nested) {
       ret.add(n.getTorrent());

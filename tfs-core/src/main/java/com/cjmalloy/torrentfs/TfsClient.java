@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.nio.file.Files;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 
@@ -33,7 +34,12 @@ public class TfsClient {
 
     File f = new File(rootPath + infoHash + "/");
     f.mkdirs();
-    TfsTorrent tfs = new TfsTorrent(new Client(address, new SharedTorrent(torrent, f)), infoHash);
+    TfsTorrent tfs = null;
+    try {
+      tfs = new TfsTorrent(new Client(address, new SharedTorrent(torrent, f)), infoHash);
+    } catch (NoSuchAlgorithmException e) {
+      throw new RuntimeException("Required Crypto algorithms not installed.");
+    }
     tfs.client.addObserver(new Observer() {
       @Override
       public void update(Observable arg0, Object arg1) {
@@ -111,7 +117,11 @@ public class TfsClient {
     Meta meta = Meta.load(metaFile);
     TfsTorrent t = lookup.get(infoHash);
     t.tfsData = meta;
-    t.nested = addTorrents(meta.getNestedTorrents());
+    try {
+      t.nested = addTorrents(meta.getNestedTorrents());
+    } catch (NoSuchAlgorithmException e) {
+      throw new RuntimeException("Required Crypto algorithms not installed.");
+    }
     symlinkNested(infoHash);
   }
 }

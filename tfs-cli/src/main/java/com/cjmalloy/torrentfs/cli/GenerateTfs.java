@@ -2,7 +2,6 @@ package com.cjmalloy.torrentfs.cli;
 
 import com.cjmalloy.torrentfs.model.Encoding;
 import com.cjmalloy.torrentfs.util.TfsUtil;
-import com.turn.ttorrent.cli.TorrentMain;
 import com.turn.ttorrent.common.Torrent;
 import jargs.gnu.CmdLineParser;
 import org.apache.log4j.BasicConfigurator;
@@ -20,7 +19,7 @@ import java.util.Vector;
 
 public class GenerateTfs {
 
-  private static final Logger logger = LoggerFactory.getLogger(TorrentMain.class);
+  private static final Logger logger = LoggerFactory.getLogger(GenerateTfs.class);
 
   /**
    * Display program usage on the given {@link PrintStream}.

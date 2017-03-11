@@ -8,14 +8,18 @@ import com.cjmalloy.torrentfs.util.BencodeUtil;
 import com.turn.ttorrent.bcodec.BDecoder;
 import com.turn.ttorrent.common.Torrent;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
 
 @Path("/")
 public class Api {
+  private static final Logger logger = LoggerFactory.getLogger(Api.class);
 
   @POST
   @Path("/add")
@@ -27,6 +31,9 @@ public class Api {
     } catch (IOException e) {
       e.printStackTrace();
       throw new WebApplicationException(400);
+    } catch (NoSuchAlgorithmException e) {
+      logger.error("Required Crypto algorithms not installed.");
+      throw new WebApplicationException(500);
     }
   }
 

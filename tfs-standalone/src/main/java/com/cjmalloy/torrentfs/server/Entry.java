@@ -47,14 +47,6 @@ public class Entry {
       System.exit(1);
     }
 
-    try {
-      parser.parse(args);
-    } catch (CmdLineParser.OptionException oe) {
-      System.err.println(oe.getMessage());
-      usage(System.err);
-      System.exit(1);
-    }
-
     int port = (int) parser.getOptionValue(argPort, DEFAULT_PORT);
     String tfsCache = (String) parser.getOptionValue(argCache, DEFAULT_CACHE);
     boolean htmlStatic = (boolean) parser.getOptionValue(argHtmlStatic, DEFAULT_HTML_STATIC);

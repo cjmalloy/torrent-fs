@@ -21,13 +21,14 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TfsUtil {
   public static Torrent generateLegacyTorrent(File source, final List<String> ignoreFilter, List<List<URI>> announceList, String createdBy)
-    throws InterruptedException, IOException {
+    throws InterruptedException, IOException, NoSuchAlgorithmException {
     if (!source.isDirectory()) {
       return Torrent.create(source, Torrent.DEFAULT_PIECE_LENGTH, announceList, createdBy);
     }
@@ -66,7 +67,7 @@ public class TfsUtil {
    * @return the list of torrent files
    */
   public static List<Torrent> generateTorrentFromTfs(File source, Encoding encoding, List<List<URI>> announceList, String createdBy, File cache, boolean link)
-    throws InterruptedException, IOException {
+    throws InterruptedException, IOException, NoSuchAlgorithmException {
     Meta tfs = null;
     File rootTfs = null;
     boolean isDir = source.isDirectory();
@@ -131,11 +132,11 @@ public class TfsUtil {
     return magnet;
   }
 
-  public static Torrent getTorrentFromBencode(String torrent_base64) throws IOException {
+  public static Torrent getTorrentFromBencode(String torrent_base64) throws IOException, NoSuchAlgorithmException {
     return new Torrent(Base64.decodeBase64(torrent_base64.getBytes(Charset.forName("UTF-8"))), false);
   }
 
-  public static Torrent getTorrentFromJson(Encoding encoding, JsonElement torrent) throws IOException {
+  public static Torrent getTorrentFromJson(Encoding encoding, JsonElement torrent) throws IOException, NoSuchAlgorithmException {
     switch (encoding) {
       case BENCODE_BASE64:
         return getTorrentFromBencode(torrent.getAsString());

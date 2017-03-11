@@ -10,6 +10,7 @@ import com.turn.ttorrent.common.Torrent;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 
 public class Nested implements HasJson {
@@ -57,7 +58,7 @@ public class Nested implements HasJson {
    */
   public transient Meta meta = null;
 
-  public Torrent getTorrent() throws IOException {
+  public Torrent getTorrent() throws IOException, NoSuchAlgorithmException {
     return TfsUtil.getTorrentFromJson(encoding, torrent);
   }
 

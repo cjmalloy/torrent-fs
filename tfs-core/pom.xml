@@ -27,9 +27,9 @@
     </dependency>
     <dependency>
       <groupId>com.turn</groupId>
-      <artifactId>ttorrent</artifactId>
-      <version>1.5-SNAPSHOT</version>
-   </dependency>
+      <artifactId>ttorrent-core</artifactId>
+      <version>1.6-SNAPSHOT</version>
+    </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
