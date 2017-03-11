@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.cjmalloy</groupId>
     <artifactId>cjmalloy</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
   </parent>
 
   <artifactId>torrent-fs</artifactId>
