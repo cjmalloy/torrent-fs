@@ -1,15 +1,12 @@
 package com.cjmalloy.torrentfs.model;
 
-import com.turn.ttorrent.common.Torrent;
-
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.net.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.turn.ttorrent.common.Torrent;
 
 public class Magnet {
 
@@ -21,10 +18,11 @@ public class Magnet {
     infoHash = torrent.getHexInfoHash();
     name = torrent.getName();
     announce = new ArrayList<>();
-    for (List<URI> uris : torrent.getAnnounceList())
+    for (List<URI> uris : torrent.getAnnounceList()) {
       for (URI uri : uris) {
         announce.add(uri);
       }
+    }
     return this;
   }
 
@@ -33,14 +31,18 @@ public class Magnet {
     return null;
   }
 
-  public Magnet parse(String magnet_uri) throws ParseException, UnsupportedEncodingException, URISyntaxException {
-    if (!magnet_uri.startsWith("magnet:?")) throw new ParseException(magnet_uri, 0);
-    magnet_uri = magnet_uri.substring(8);
-    String[] args = magnet_uri.split("&");
+  public Magnet parse(String magnetUri) throws ParseException, UnsupportedEncodingException, URISyntaxException {
+    if (!magnetUri.startsWith("magnet:?")) throw new ParseException(magnetUri, 0);
+    magnetUri = magnetUri.substring(8);
+    String[] args = magnetUri.split("&");
     for (String arg : args) {
-      if (arg.startsWith("xt=urn:btih:")) infoHash = arg.substring(12);
-      else if (arg.startsWith("dn=")) name = URLDecoder.decode(arg.substring(3), "UTF-8");
-      else if (arg.startsWith("tr=")) addAnnounce(new URI(URLDecoder.decode(arg.substring(3), "UTF-8")));
+      if (arg.startsWith("xt=urn:btih:")) {
+        infoHash = arg.substring(12);
+      } else if (arg.startsWith("dn=")) {
+        name = URLDecoder.decode(arg.substring(3), "UTF-8");
+      } else if (arg.startsWith("tr=")) {
+        addAnnounce(new URI(URLDecoder.decode(arg.substring(3), "UTF-8")));
+      }
     }
     return this;
   }
@@ -52,7 +54,7 @@ public class Magnet {
 
   public String write() throws UnsupportedEncodingException {
     String magnet = "magnet:?xt=urn:btih:" + infoHash
-      + "&dn=" + URLEncoder.encode(name, "UTF-8");
+        + "&dn=" + URLEncoder.encode(name, "UTF-8");
     for (URI uri : announce) {
       magnet += "&tr=" + URLEncoder.encode(uri.toString(), "UTF-8");
     }

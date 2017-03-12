@@ -1,8 +1,6 @@
 package com.cjmalloy.torrentfs.extension;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 
 
 public class HtmlExtension implements Extension {

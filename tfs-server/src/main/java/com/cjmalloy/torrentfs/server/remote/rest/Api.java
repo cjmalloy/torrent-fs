@@ -1,5 +1,11 @@
 package com.cjmalloy.torrentfs.server.remote.rest;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+
 import com.cjmalloy.torrentfs.TfsTorrent;
 import com.cjmalloy.torrentfs.server.TfsClientSingleton;
 import com.cjmalloy.torrentfs.server.util.ModelUtil;
@@ -10,12 +16,6 @@ import com.turn.ttorrent.common.Torrent;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.NoSuchAlgorithmException;
 
 @Path("/")
 public class Api {

@@ -1,8 +1,15 @@
 package com.cjmalloy.torrentfs.util;
 
-import com.cjmalloy.torrentfs.model.Encoding;
-import com.cjmalloy.torrentfs.model.Meta;
-import com.cjmalloy.torrentfs.model.Nested;
+import java.io.*;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
+
+import com.cjmalloy.torrentfs.model.*;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.turn.ttorrent.common.Torrent;
@@ -12,23 +19,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class TfsUtil {
   public static Torrent generateLegacyTorrent(File source, final List<String> ignoreFilter, List<List<URI>> announceList, String createdBy)
-    throws InterruptedException, IOException, NoSuchAlgorithmException {
+      throws InterruptedException, IOException, NoSuchAlgorithmException {
     if (!source.isDirectory()) {
       return Torrent.create(source, Torrent.DEFAULT_PIECE_LENGTH, announceList, createdBy);
     }
@@ -66,8 +59,9 @@ public class TfsUtil {
    * @param link         use symbolic links instead of copying to the cache directory
    * @return the list of torrent files
    */
-  public static List<Torrent> generateTorrentFromTfs(File source, Encoding encoding, List<List<URI>> announceList, String createdBy, File cache, boolean link)
-    throws InterruptedException, IOException, NoSuchAlgorithmException {
+  public static List<Torrent> generateTorrentFromTfs(File source, Encoding encoding, List<List<URI>> announceList, String createdBy,
+                                                     File cache, boolean link)
+      throws InterruptedException, IOException, NoSuchAlgorithmException {
     Meta tfs = null;
     File rootTfs = null;
     boolean isDir = source.isDirectory();
@@ -124,16 +118,17 @@ public class TfsUtil {
 
   public static String getMagnetAddress(Torrent torrent) throws UnsupportedEncodingException {
     String magnet = "magnet:?xt=urn:btih:" + torrent.getHexInfoHash()
-      + "&dn=" + URLEncoder.encode(torrent.getName(), "UTF-8");
-    for (List<URI> uris : torrent.getAnnounceList())
+        + "&dn=" + URLEncoder.encode(torrent.getName(), "UTF-8");
+    for (List<URI> uris : torrent.getAnnounceList()) {
       for (URI uri : uris) {
         magnet += "&tr=" + URLEncoder.encode(uri.toString(), "UTF-8");
       }
+    }
     return magnet;
   }
 
-  public static Torrent getTorrentFromBencode(String torrent_base64) throws IOException, NoSuchAlgorithmException {
-    return new Torrent(Base64.decodeBase64(torrent_base64.getBytes(Charset.forName("UTF-8"))), false);
+  public static Torrent getTorrentFromBencode(String torrentBase64) throws IOException, NoSuchAlgorithmException {
+    return new Torrent(Base64.decodeBase64(torrentBase64.getBytes(Charset.forName("UTF-8"))), false);
   }
 
   public static Torrent getTorrentFromJson(Encoding encoding, JsonElement torrent) throws IOException, NoSuchAlgorithmException {

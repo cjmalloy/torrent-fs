@@ -1,23 +1,16 @@
 package com.cjmalloy.torrentfs.model;
 
+import java.io.*;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
+
 import com.cjmalloy.torrentfs.extension.Extension;
 import com.cjmalloy.torrentfs.extension.Extension.ExtensionFactory;
 import com.cjmalloy.torrentfs.util.JsonUtil;
 import com.cjmalloy.torrentfs.util.JsonUtil.HasJson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import com.turn.ttorrent.common.Torrent;
 import org.apache.commons.io.IOUtils;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
 public class Meta implements HasJson {

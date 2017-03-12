@@ -1,27 +1,23 @@
 package com.cjmalloy.torrentfs.server;
 
-import com.turn.ttorrent.client.ConnectionHandler;
-import jargs.gnu.CmdLineParser;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.PatternLayout;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.AllowSymLinkAliasChecker;
-import org.eclipse.jetty.server.handler.ContextHandler.AliasCheck;
-import org.eclipse.jetty.servlet.DefaultServlet;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.glassfish.jersey.servlet.ServletContainer;
-import org.teleal.cling.UpnpService;
-import org.teleal.cling.UpnpServiceImpl;
-import org.teleal.cling.support.igd.PortMappingListener;
-import org.teleal.cling.support.model.PortMapping;
-
 import java.io.PrintStream;
 import java.net.*;
 import java.nio.channels.UnsupportedAddressTypeException;
 import java.util.Arrays;
 import java.util.Enumeration;
+
+import com.turn.ttorrent.client.ConnectionHandler;
+import jargs.gnu.CmdLineParser;
+import org.apache.log4j.*;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.AllowSymLinkAliasChecker;
+import org.eclipse.jetty.server.handler.ContextHandler.AliasCheck;
+import org.eclipse.jetty.servlet.*;
+import org.glassfish.jersey.servlet.ServletContainer;
+import org.teleal.cling.UpnpService;
+import org.teleal.cling.UpnpServiceImpl;
+import org.teleal.cling.support.igd.PortMappingListener;
+import org.teleal.cling.support.model.PortMapping;
 
 public class Entry {
   public static final int DEFAULT_PORT = 8080;
@@ -88,13 +84,13 @@ public class Entry {
     //uPnP
     if (upnp) {
       PortMapping desiredMapping = new PortMapping(
-        ConnectionHandler.PORT_RANGE_START,
-        address.getHostAddress(),
-        PortMapping.Protocol.TCP
+          ConnectionHandler.PORT_RANGE_START,
+          address.getHostAddress(),
+          PortMapping.Protocol.TCP
       );
 
       UpnpService upnpService = new UpnpServiceImpl(
-        new PortMappingListener(desiredMapping)
+          new PortMappingListener(desiredMapping)
       );
 
       upnpService.getControlPoint().search();

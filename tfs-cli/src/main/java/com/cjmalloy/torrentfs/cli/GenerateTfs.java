@@ -1,21 +1,17 @@
 package com.cjmalloy.torrentfs.cli;
 
+import java.io.File;
+import java.io.PrintStream;
+import java.net.URI;
+import java.util.*;
+
 import com.cjmalloy.torrentfs.model.Encoding;
 import com.cjmalloy.torrentfs.util.TfsUtil;
 import com.turn.ttorrent.common.Torrent;
 import jargs.gnu.CmdLineParser;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.PatternLayout;
+import org.apache.log4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.PrintStream;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 public class GenerateTfs {
 
@@ -50,10 +46,9 @@ public class GenerateTfs {
 
   /**
    * Torrent reader and creator.
-   * <p>
-   * <p>
-   * You can use the {@code main()} function of this class to read or create
-   * torrent files. See usage for details.
+   *
+   * <p> You can use the {@code main()} function of this class to read or create
+   * torrent files. See usage for details.</p>
    * </p>
    */
   public static void main(String[] args) {
@@ -74,14 +69,14 @@ public class GenerateTfs {
     }
 
     // Display help and exit if requested
-    if (Boolean.TRUE.equals((Boolean) parser.getOptionValue(argHelp))) {
+    if (Boolean.TRUE.equals(parser.getOptionValue(argHelp))) {
       usage(System.out);
       System.exit(0);
     }
 
     // For repeated announce urls
     @SuppressWarnings("unchecked")
-    Vector<String> announceURLs = (Vector<String>) parser.getOptionValues(argAnnounce);
+    Vector<String> announceUrls = (Vector<String>) parser.getOptionValues(argAnnounce);
     String cache = (String) parser.getOptionValue(argCache, null);
     boolean link = (Boolean) parser.getOptionValue(argLink, false);
 
@@ -91,15 +86,15 @@ public class GenerateTfs {
 
     try {
       // Process the announce URLs into URIs
-      List<URI> announceURIs = new ArrayList<URI>();
-      for (String url : announceURLs) {
-        announceURIs.add(new URI(url));
+      List<URI> announceUris = new ArrayList<URI>();
+      for (String url : announceUrls) {
+        announceUris.add(new URI(url));
       }
 
       // Create the announce-list as a list of lists of URIs
       // Assume all the URI's are first tier trackers
       List<List<URI>> announceList = new ArrayList<List<URI>>();
-      announceList.add(announceURIs);
+      announceList.add(announceUris);
 
       File source = new File(otherArgs[0]);
       if (!source.exists() || !source.canRead()) {

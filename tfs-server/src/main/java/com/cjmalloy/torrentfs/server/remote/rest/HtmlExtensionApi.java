@@ -1,15 +1,12 @@
 package com.cjmalloy.torrentfs.server.remote.rest;
 
-import com.cjmalloy.torrentfs.extension.HtmlExtension;
-import com.cjmalloy.torrentfs.server.TfsClientSingleton;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.WebApplicationException;
+import java.net.URI;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import java.net.URI;
+
+import com.cjmalloy.torrentfs.extension.HtmlExtension;
+import com.cjmalloy.torrentfs.server.TfsClientSingleton;
 
 @Path("/ext/html/")
 public class HtmlExtensionApi {

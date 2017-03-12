@@ -1,11 +1,9 @@
 package com.cjmalloy.torrentfs.extension;
 
+import java.util.*;
+
 import com.cjmalloy.torrentfs.util.JsonUtil.HasJson;
 import com.google.gson.JsonObject;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 public interface Extension extends HasJson {

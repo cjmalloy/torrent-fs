@@ -1,8 +1,8 @@
 package com.cjmalloy.torrentfs.server;
 
-import com.cjmalloy.torrentfs.TfsClient;
-
 import java.net.Inet4Address;
+
+import com.cjmalloy.torrentfs.TfsClient;
 
 
 public class TfsClientSingleton {

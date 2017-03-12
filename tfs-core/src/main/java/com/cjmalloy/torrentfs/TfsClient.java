@@ -1,5 +1,12 @@
 package com.cjmalloy.torrentfs;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.Inet4Address;
+import java.nio.file.Files;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
+
 import com.cjmalloy.torrentfs.model.Meta;
 import com.turn.ttorrent.client.Client;
 import com.turn.ttorrent.client.Client.ClientState;
@@ -7,13 +14,6 @@ import com.turn.ttorrent.client.SharedTorrent;
 import com.turn.ttorrent.common.Torrent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.nio.file.Files;
-import java.security.NoSuchAlgorithmException;
-import java.util.*;
 
 
 public class TfsClient {

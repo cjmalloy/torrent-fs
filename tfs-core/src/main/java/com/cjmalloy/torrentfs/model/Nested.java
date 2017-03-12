@@ -1,16 +1,14 @@
 package com.cjmalloy.torrentfs.model;
 
-import com.cjmalloy.torrentfs.util.JsonUtil.Factory;
-import com.cjmalloy.torrentfs.util.JsonUtil.HasJson;
-import com.cjmalloy.torrentfs.util.TfsUtil;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.turn.ttorrent.common.Torrent;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+
+import com.cjmalloy.torrentfs.util.JsonUtil.Factory;
+import com.cjmalloy.torrentfs.util.JsonUtil.HasJson;
+import com.cjmalloy.torrentfs.util.TfsUtil;
+import com.google.gson.*;
+import com.turn.ttorrent.common.Torrent;
 
 
 public class Nested implements HasJson {
@@ -30,8 +28,8 @@ public class Nested implements HasJson {
 
   /**
    * Determines the encoding type of the "torrent" field.
-   * <p>
-   * Currently only "bencode" is implemented.
+   *
+   * <p>Currently only "bencode" is implemented.</p>
    */
   public Encoding encoding;
 

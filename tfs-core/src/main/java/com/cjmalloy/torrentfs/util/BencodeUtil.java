@@ -1,10 +1,10 @@
 package com.cjmalloy.torrentfs.util;
 
-import com.turn.ttorrent.bcodec.BEValue;
-import com.turn.ttorrent.bcodec.InvalidBEncodingException;
-
 import java.util.List;
 import java.util.Map;
+
+import com.turn.ttorrent.bcodec.BEValue;
+import com.turn.ttorrent.bcodec.InvalidBEncodingException;
 
 
 public class BencodeUtil {
