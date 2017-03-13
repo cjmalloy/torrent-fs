@@ -49,7 +49,6 @@ public class GenerateTfs {
    *
    * <p> You can use the {@code main()} function of this class to read or create
    * torrent files. See usage for details.</p>
-   * </p>
    */
   public static void main(String[] args) {
     BasicConfigurator.configure(new ConsoleAppender(new PatternLayout("%-5p: %m%n")));
