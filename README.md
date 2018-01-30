@@ -17,7 +17,7 @@ A tfs client operates by presenting a tfs torrent and an extension. The referere
 
 All tfs torrents have a .tfs JSON file. If the torrent is a single file torrent ("length" torrent), then the entire payload is that file. If the torrent is a folder torrent ("files" torrent), then the .tfs file is in the root directory.
 
-The .tfs file contains the netsted torrents, GPG signatures, and a list of extenstions. Here is a sample that supports the html extension:
+The .tfs file contains the nested torrents, GPG signatures, and a list of extenstions. Here is a sample that supports the html extension:
 
 ```javascript
 {
